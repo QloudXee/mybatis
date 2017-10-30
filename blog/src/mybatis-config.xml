@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 全局配置项 -->
+		<!-- 允许JDBC支持生成的键 -->
+		<setting name="useGeneratedKeys" value="true" /> 
+	</settings>
+	<typeAliases>
+		<!-- 配置实体Blog实体数据（全称）的别名为Blog -->
+		<typeAlias type="com.q.model.Blog" alias="Blog" />
+	</typeAliases>
+	<environments default="development">
+		<!-- 默认的环境ID -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:8081/blog_db" />
+				<property name="username" value="root" />
+				<property name="password" value="1234" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers> 
+		<!-- 引用映射文件 -->
+		<mapper resource="com/q/mapper/BlogMapper.xml" />
+	</mappers>
+</configuration>
