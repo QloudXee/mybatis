@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射器名字空间，即BlogMapper对象的完整路径名 -->
+<mapper namespace="com.q.mapper.BlogMapper">
+
+	<resultMap type="Blog" id="blogResultMap">
+		<result column="id" property="id"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="create_time" property="createTime"/>
+		<result column="type" property="type"/>
+		<association property="author" resultMap="authorResultMap"></association>
+	</resultMap>
+	<resultMap type="Author" id="authorResultMap">
+		<result column="a_id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+		<result column="address" property="address"/>
+		<result column="phone" property="phone"/>
+	</resultMap>
+
+	<!-- 新增记录，映射SQL插入语句。id为当前命名空间中唯一的标识符，可以被用于引用该语句。
+		当映射器接口中的某一方法与id值一致时，就会执行该语句。parameterType属性定义方法参数类型 -->
+	<insert id="insertBlog" parameterType="Blog">
+		INSERT INTO
+		blog(title,content,create_time,type)
+		VALUES(#{title},#{content},#{createTime},#{type})
+	</insert>
+	<select id="queryBlog" resultType="Blog">
+		SELECT * FROM blog 
+	</select>
+	<select id="queryBlogById" resultMap="blogResultMap">
+		SELECT
+			b.id,b.title,b.content,b.type,b.create_time,
+			a.id a_id,a.username,a.password,a.email,a.address,a.phone
+		FROM blog b , author a 
+		WHERE b.author_id = a.id
+		And b.id=#{id}
+	</select>
+	<update id="updateBlog" parameterType="Blog">
+        UPDATE blog SET title=#{title},content=#{content},create_time=#{createTime},type=#{type} where id=#{id}
+    </update>
+    <delete id="deleteBlog" parameterType="com.q.model.Blog">
+        DELETE FROM blog WHERE id= #{id}
+    </delete>
+    <select id="queryByType" resultType="Blog">
+		SELECT * FROM blog WHERE type=#{type}
+	</select>
+</mapper>

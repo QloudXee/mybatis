@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 映射器名字空间，即BlogMapper对象的完整路径名 -->
+<mapper namespace="com.q.mapper.AuthorMapper">
+	<!-- 新增记录，映射SQL插入语句。id为当前命名空间中唯一的标识符，可以被用于引用该语句。
+		当映射器接口中的某一方法与id值一致时，就会执行该语句。parameterType属性定义方法参数类型 -->
+	<update id="alertPassword" parameterType="Author">
+		UPDATE author SET password=#{password} WHERE username LIKE #{username} '%'  
+	</update>
+	<update id="deleteAuthor" parameterType="java.lang.String">
+		DELETE FROM author WHERE username=#{username} 
+	</update>
+</mapper>
